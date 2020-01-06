@@ -28,6 +28,8 @@ current_miles = 0
 x_axis = [0]
 y_axis = [0]
 
+max_miles = 0
+
 for date, miles in distances:
     year = date.year
     if current_year != year:
@@ -39,6 +41,8 @@ for date, miles in distances:
 
     current_miles += miles
     day_of_year = date.timetuple().tm_yday
+
+    max_miles = max(max_miles, current_miles)
 
     x_axis.append(day_of_year)
     y_axis.append(current_miles)
@@ -59,6 +63,6 @@ pyplot.xticks(days, months, rotation=30)
 pyplot.subplots_adjust(top=0.95, bottom=0.15)
 pylab.legend(loc='upper left')
 pyplot.xlim(right=365)
-pyplot.ylim(top=3000)
+pyplot.ylim(top=max_miles)
 pyplot.margins(0.4)
 pyplot.savefig('miles_per_year.png')
